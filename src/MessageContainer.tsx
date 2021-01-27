@@ -86,6 +86,7 @@ export interface MessageContainerProps<TMessage extends IMessage> {
   onLoadEarlier?(): void
   onQuickReply?(replies: Reply[]): void
   infiniteScroll?: boolean
+  onEndReachedThreshold?: number
   isLoadingEarlier?: boolean
 }
 
@@ -97,6 +98,7 @@ export default class MessageContainer<
   TMessage extends IMessage = IMessage
 > extends React.PureComponent<MessageContainerProps<TMessage>, State> {
   static defaultProps = {
+    isMyMessage: null,
     messages: [],
     user: {},
     isTyping: false,
@@ -115,10 +117,12 @@ export default class MessageContainer<
     alignTop: false,
     scrollToBottomStyle: {},
     infiniteScroll: false,
+    onEndReachedThreshold: 0.5,
     isLoadingEarlier: false,
   }
 
   static propTypes = {
+    isMyMessage: PropTypes.bool,
     messages: PropTypes.arrayOf(PropTypes.object),
     isTyping: PropTypes.bool,
     user: PropTypes.object,
@@ -138,6 +142,7 @@ export default class MessageContainer<
     alignTop: PropTypes.bool,
     scrollToBottomStyle: StylePropType,
     infiniteScroll: PropTypes.bool,
+    onEndReachedThreshold: PropTypes.number,
   }
 
   state = {
@@ -237,6 +242,7 @@ export default class MessageContainer<
       const messageProps: Message['props'] = {
         ...restProps,
         user,
+        isMyMessage: item.isMyMessage,
         key: item._id,
         currentMessage: item,
         previousMessage,
@@ -307,7 +313,7 @@ export default class MessageContainer<
     }
   }
 
-  onEndReached = ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+  onEndReached = () => {
     const {
       loadEarlier,
       onLoadEarlier,
@@ -316,8 +322,9 @@ export default class MessageContainer<
     } = this.props
     if (
       infiniteScroll &&
-      distanceFromEnd > 0 &&
-      distanceFromEnd <= 100 &&
+      // ((distanceFromEnd > 0 &&
+      //   distanceFromEnd <= 100 &&	distanceFromEnd <= 100) ||
+      //   distanceFromEnd < 0) &&
       loadEarlier &&
       onLoadEarlier &&
       !isLoadingEarlier &&
@@ -330,7 +337,7 @@ export default class MessageContainer<
   keyExtractor = (item: TMessage) => `${item._id}`
 
   render() {
-    const { inverted } = this.props
+    const { inverted, onEndReachedThreshold } = this.props
     return (
       <View
         style={
@@ -363,7 +370,7 @@ export default class MessageContainer<
           scrollEventThrottle={100}
           onLayout={this.onLayoutList}
           onEndReached={this.onEndReached}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={onEndReachedThreshold || 0.5}
           {...this.props.listViewProps}
         />
       </View>

@@ -42,11 +42,14 @@ const styles = {
 }
 
 export interface TimeProps<TMessage extends IMessage> {
+  isMyMessage: boolean
   position: 'left' | 'right'
   currentMessage?: TMessage
   containerStyle?: LeftRightStyle<ViewStyle>
   timeTextStyle?: LeftRightStyle<TextStyle>
   timeFormat?: string
+  dateFormat?: string
+  accessibilityHint?: string
 }
 
 export default class Time<
@@ -67,6 +70,7 @@ export default class Time<
   }
 
   static propTypes = {
+    accessibilityHint: PropTypes.string,
     position: PropTypes.oneOf(['left', 'right']),
     currentMessage: PropTypes.object,
     containerStyle: PropTypes.shape({
@@ -87,6 +91,8 @@ export default class Time<
       currentMessage,
       timeFormat,
       timeTextStyle,
+      accessibilityHint,
+      dateFormat,
     } = this.props
 
     if (!!currentMessage) {
@@ -98,6 +104,11 @@ export default class Time<
           ]}
         >
           <Text
+            accessibilityLabel={`,${accessibilityHint} ${dayjs(
+              currentMessage.createdAt,
+            )
+              .locale(this.context.getLocale())
+              .format(dateFormat + ' ' + timeFormat)}`}
             style={
               [
                 styles[position].text,
