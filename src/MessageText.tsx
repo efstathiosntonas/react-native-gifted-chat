@@ -56,6 +56,7 @@ const DEFAULT_OPTION_TITLES = ['Call', 'Text', 'Cancel']
 
 export interface MessageTextProps<TMessage extends IMessage> {
   position: 'left' | 'right'
+  isMyMessage: boolean
   optionTitles?: string[]
   currentMessage?: TMessage
   containerStyle?: LeftRightStyle<ViewStyle>
@@ -74,6 +75,7 @@ export default class MessageText<
   }
 
   static defaultProps = {
+    isMyMessage: null,
     position: 'left',
     optionTitles: DEFAULT_OPTION_TITLES,
     currentMessage: {
@@ -88,6 +90,7 @@ export default class MessageText<
   }
 
   static propTypes = {
+    isMyMessage: PropTypes.bool,
     position: PropTypes.oneOf(['left', 'right']),
     optionTitles: PropTypes.arrayOf(PropTypes.string),
     currentMessage: PropTypes.object,
@@ -162,6 +165,17 @@ export default class MessageText<
   onEmailPress = (email: string) =>
     Communications.email([email], null, null, null, null)
 
+  getAccessibilityLabel = () => {
+    if(this.props.currentMessage) {
+      if(this.props.isMyMessage) {
+          return `your message, ${this.props.currentMessage.text}`
+      } else {
+        return `message, ${this.props.currentMessage.text}`
+      }
+    }
+    return ""
+  }
+
   render() {
     const linkStyle = [
       styles[this.props.position].link,
@@ -176,7 +190,8 @@ export default class MessageText<
         ]}
       >
         <ParsedText
-          style={[
+        accessibilityLabel={this.getAccessibilityLabel()}
+        style={[
             styles[this.props.position].text,
             this.props.textStyle && this.props.textStyle[this.props.position],
             this.props.customTextStyle,

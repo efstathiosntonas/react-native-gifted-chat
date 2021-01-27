@@ -49,6 +49,9 @@ export interface QuickReplies {
 }
 
 export interface IMessage {
+  accessibilityHint: string
+  isMyMessage: boolean;
+  messageImage?:string;
   _id: string | number
   text: string
   createdAt: Date | number

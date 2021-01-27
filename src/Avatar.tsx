@@ -154,6 +154,8 @@ export default class Avatar<
     ) {
       return (
         <View
+          accessibilityLabel={`avatar of ${currentMessage.user.name}, tap to visit user's profile`}
+          accessible
           style={[
             styles[position].container,
             containerStyle && containerStyle[position],

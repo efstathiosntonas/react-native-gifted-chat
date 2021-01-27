@@ -30,6 +30,7 @@ export type RenderMessageTextProps<TMessage: IMessage = IMessage> = $Diff<
   MessageTextProps<TMessage>
 
 export type BubbleProps<TMessage: IMessage = IMessage> = $ReadOnly<{|
+  isMyMessage: boolean,
   user?: User,
   touchableProps?: Object,
   renderUsernameOnMessage?: boolean,

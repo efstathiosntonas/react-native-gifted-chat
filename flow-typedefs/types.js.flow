@@ -26,6 +26,7 @@ export type QuickReplies = {
 }
 
 export type IMessage = {
+  messageImage?:string;
   _id: string | number,
   text: string,
   createdAt: Date | number,
