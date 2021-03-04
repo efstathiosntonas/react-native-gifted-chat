@@ -34,6 +34,7 @@ const styles = {
 export interface MessageProps<TMessage extends IMessage> {
   isMyMessage: boolean
   key: any
+  index: number,
   showUserAvatar?: boolean
   position: 'left' | 'right'
   currentMessage?: TMessage
@@ -56,6 +57,7 @@ export default class Message<
   TMessage extends IMessage = IMessage
 > extends React.Component<MessageProps<TMessage>> {
   static defaultProps = {
+    index: 0,
     isMyMessage: null,
     renderAvatar: undefined,
     renderBubble: null,
@@ -73,6 +75,7 @@ export default class Message<
   }
 
   static propTypes = {
+    index: PropTypes.number,
     isMyMessage: PropTypes.bool,
     renderAvatar: PropTypes.func,
     showUserAvatar: PropTypes.bool,

@@ -9,6 +9,7 @@ import { IMessage, User, LeftRightStyle } from './Models';
 export interface MessageProps<TMessage extends IMessage> {
     isMyMessage: boolean;
     key: any;
+    index: number;
     showUserAvatar?: boolean;
     position: 'left' | 'right';
     currentMessage?: TMessage;
@@ -25,6 +26,7 @@ export interface MessageProps<TMessage extends IMessage> {
 }
 export default class Message<TMessage extends IMessage = IMessage> extends React.Component<MessageProps<TMessage>> {
     static defaultProps: {
+        index: number;
         isMyMessage: null;
         renderAvatar: undefined;
         renderBubble: null;
@@ -41,6 +43,7 @@ export default class Message<TMessage extends IMessage = IMessage> extends React
         shouldUpdateMessage: undefined;
     };
     static propTypes: {
+        index: PropTypes.Requireable<number>;
         isMyMessage: PropTypes.Requireable<boolean>;
         renderAvatar: PropTypes.Requireable<(...args: any[]) => any>;
         showUserAvatar: PropTypes.Requireable<boolean>;

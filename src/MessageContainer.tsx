@@ -242,6 +242,7 @@ export default class MessageContainer<
       const messageProps: Message['props'] = {
         ...restProps,
         user,
+        index,
         isMyMessage: item.isMyMessage,
         key: item._id,
         currentMessage: item,
