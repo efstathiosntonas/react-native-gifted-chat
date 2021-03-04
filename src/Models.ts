@@ -54,7 +54,7 @@ export interface IMessage {
   messageImage?: string
   _id: string | number
   text: string
-  index: number,
+  index: number
   createdAt: Date | number
   user: User
   image?: string
