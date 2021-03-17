@@ -91,7 +91,8 @@ export interface MessageContainerProps<TMessage extends IMessage> {
 }
 
 interface State {
-  showScrollBottom: boolean
+  showScrollBottom: boolean,
+  hasScrolled: boolean
 }
 
 export default class MessageContainer<
@@ -147,6 +148,7 @@ export default class MessageContainer<
 
   state = {
     showScrollBottom: false,
+    hasScrolled: false
   }
 
   renderTypingIndicator = () => {
@@ -203,18 +205,18 @@ export default class MessageContainer<
     const { scrollToBottomOffset } = this.props
     if (this.props.inverted) {
       if (contentOffsetY > scrollToBottomOffset!) {
-        this.setState({ showScrollBottom: true })
+        this.setState({ showScrollBottom: true, hasScrolled: true })
       } else {
-        this.setState({ showScrollBottom: false })
+        this.setState({ showScrollBottom: false, hasScrolled: true })
       }
     } else {
       if (
         contentOffsetY < scrollToBottomOffset! &&
         contentSizeHeight - layoutMeasurementHeight > scrollToBottomOffset!
       ) {
-        this.setState({ showScrollBottom: true })
+        this.setState({ showScrollBottom: true, hasScrolled: true })
       } else {
-        this.setState({ showScrollBottom: false })
+        this.setState({ showScrollBottom: false, hasScrolled: true })
       }
     }
   }
@@ -314,7 +316,7 @@ export default class MessageContainer<
     }
   }
 
-  onEndReached = () => {
+  onEndReached = ({ distanceFromEnd }: { distanceFromEnd: number }) => {
     const {
       loadEarlier,
       onLoadEarlier,
@@ -323,9 +325,8 @@ export default class MessageContainer<
     } = this.props
     if (
       infiniteScroll &&
-      // ((distanceFromEnd > 0 &&
-      //   distanceFromEnd <= 100 &&	distanceFromEnd <= 100) ||
-      //   distanceFromEnd < 0) &&
+      (this.state.hasScrolled || distanceFromEnd > 0) &&
+      distanceFromEnd <= 100 &&
       loadEarlier &&
       onLoadEarlier &&
       !isLoadingEarlier &&

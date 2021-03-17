@@ -31,6 +31,7 @@ export interface MessageContainerProps<TMessage extends IMessage> {
 }
 interface State {
     showScrollBottom: boolean;
+    hasScrolled: boolean;
 }
 export default class MessageContainer<TMessage extends IMessage = IMessage> extends React.PureComponent<MessageContainerProps<TMessage>, State> {
     static defaultProps: {
@@ -81,6 +82,7 @@ export default class MessageContainer<TMessage extends IMessage = IMessage> exte
     };
     state: {
         showScrollBottom: boolean;
+        hasScrolled: boolean;
     };
     renderTypingIndicator: () => JSX.Element | null;
     renderFooter: () => {} | null | undefined;
@@ -97,7 +99,9 @@ export default class MessageContainer<TMessage extends IMessage = IMessage> exte
     renderScrollBottomComponent(): {} | null | undefined;
     renderScrollToBottomWrapper(): JSX.Element;
     onLayoutList: () => void;
-    onEndReached: () => void;
+    onEndReached: ({ distanceFromEnd }: {
+        distanceFromEnd: number;
+    }) => void;
     keyExtractor: (item: TMessage) => string;
     render(): JSX.Element;
 }
