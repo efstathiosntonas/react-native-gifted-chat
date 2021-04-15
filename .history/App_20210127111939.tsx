@@ -230,7 +230,12 @@ export default class App extends Component {
       return <AppLoading />
     }
     return (
-      <View style={styles.container} accessibilityLabel='main' testID='main'>
+      <View
+        style={styles.container}
+        accessible
+        accessibilityLabel='main'
+        testID='main'
+      >
         <NavBar />
         <GiftedChat
           messages={this.state.messages}

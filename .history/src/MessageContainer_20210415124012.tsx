@@ -372,7 +372,7 @@ export default class MessageContainer<
           onEndReachedThreshold={onEndReachedThreshold || 0.5}
           {...this.props.listViewProps}
         />
-        {this.state.showScrollBottom && this.props.scrollToBottom
+         {this.state.showScrollBottom && this.props.scrollToBottom
           ? this.renderScrollToBottomWrapper()
           : null}
       </View>

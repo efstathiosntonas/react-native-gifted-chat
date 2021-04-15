@@ -346,6 +346,9 @@ export default class MessageContainer<
           this.props.alignTop ? styles.containerAlignTop : styles.container
         }
       >
+        {this.state.showScrollBottom && this.props.scrollToBottom
+          ? this.renderScrollToBottomWrapper()
+          : null}
         <FlatList
           ref={this.props.forwardRef}
           extraData={[this.props.extraData, this.props.isTyping]}
@@ -372,9 +375,6 @@ export default class MessageContainer<
           onEndReachedThreshold={onEndReachedThreshold || 0.5}
           {...this.props.listViewProps}
         />
-        {this.state.showScrollBottom && this.props.scrollToBottom
-          ? this.renderScrollToBottomWrapper()
-          : null}
       </View>
     )
   }

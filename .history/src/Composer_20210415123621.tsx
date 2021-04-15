@@ -111,8 +111,8 @@ export default class Composer extends React.Component<ComposerProps> {
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
         editable={!this.props.disableComposer}
-        onChange={this.onContentSizeChange}
-        onContentSizeChange={this.onContentSizeChange}
+        onLayout={this.onLayout}
+        onChangeText={this.onChangeText}
         style={[
           styles.textInput,
           this.props.textInputStyle,
