@@ -347,10 +347,6 @@ export default class MessageContainer<
         }
       >
         <FlatList
-          removeClippedSubviews={true}
-          maxToRenderPerBatch={30}
-          initialNumToRender={30}
-          windowSize={80}
           ref={this.props.forwardRef}
           extraData={[this.props.extraData, this.props.isTyping]}
           keyExtractor={this.keyExtractor}
