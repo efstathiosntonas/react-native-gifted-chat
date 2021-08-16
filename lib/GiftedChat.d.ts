@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { RefObject } from 'react';
 import { Animated, StyleProp, ViewStyle, FlatList, TextStyle } from 'react-native';
 import { ActionSheetOptions } from '@expo/react-native-action-sheet';
+import 'react-native-get-random-values';
 import * as utils from './utils';
 import Actions from './Actions';
 import Avatar from './Avatar';
